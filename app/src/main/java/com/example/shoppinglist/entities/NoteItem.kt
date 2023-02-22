@@ -6,18 +6,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "note_list")
 data class NoteItem(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int?,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
 
-    @ColumnInfo(name = "title")
-    val title: String,
+    @ColumnInfo(name = "title") val title: String,
 
-    @ColumnInfo(name = "content")
-    val content: String,
+    @ColumnInfo(name = "content") val content: String,
 
-    @ColumnInfo(name = "time")
-    val time: Int,
+    @ColumnInfo(name = "time") val time: String,
 
-    @ColumnInfo(name = "category")
-    val category: String
-    )
+    @ColumnInfo(name = "category") val category: String
+    ): java.io.Serializable
