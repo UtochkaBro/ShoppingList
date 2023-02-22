@@ -18,7 +18,7 @@ import com.example.shoppinglist.db.MainViewModel
 import com.example.shoppinglist.db.NoteAdapter
 import com.example.shoppinglist.entities.NoteItem
 
-class NoteFragment : BaseFragment() {
+class NoteFragment : BaseFragment(), NoteAdapter.Listener {
 
     private lateinit var binding: FragmentNoteBinding
     private lateinit var editLauncher: ActivityResultLauncher<Intent>
@@ -27,6 +27,8 @@ class NoteFragment : BaseFragment() {
     private val mainViewModel: MainViewModel by activityViewModels{
         MainViewModel.MainViewModelFactory((context?.applicationContext as MainApp).database)
     }
+
+
 
     override fun onClickNew() {
         editLauncher.launch(Intent(activity, NewNoteActivity::class.java))
@@ -53,7 +55,7 @@ class NoteFragment : BaseFragment() {
 
     private fun initRcView() = with(binding){
         rcViewNote.layoutManager = LinearLayoutManager(activity)
-        adapter = NoteAdapter()
+        adapter = NoteAdapter(this@NoteFragment)
         rcViewNote.adapter = adapter
     }
 
@@ -77,5 +79,9 @@ class NoteFragment : BaseFragment() {
         const val NEW_NOTE_KEY = "new_note_key"
         @JvmStatic
         fun newInstance() = NoteFragment()
+    }
+
+    override fun deleteItem(id: Int) {
+        mainViewModel.deleteNote(id)
     }
 }
